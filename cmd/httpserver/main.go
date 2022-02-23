@@ -3,9 +3,9 @@ package main
 import (
 	"database/sql"
 
-	"github.com/afikrim/movie-api-go/internal/core/services/genre_service"
-	"github.com/afikrim/movie-api-go/internal/handlers/genre_handler"
-	"github.com/afikrim/movie-api-go/internal/repositories/genre_repository"
+	genre_service "github.com/afikrim/movie-api-go/internal/core/services/genre"
+	genre_handler "github.com/afikrim/movie-api-go/internal/handlers/genre"
+	genre_repository "github.com/afikrim/movie-api-go/internal/repositories/genre"
 	"github.com/gin-gonic/gin"
 	_ "github.com/go-sql-driver/mysql"
 )
