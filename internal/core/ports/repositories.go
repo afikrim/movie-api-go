@@ -1,13 +1,16 @@
 package ports
 
 import (
+	"context"
+
 	"github.com/afikrim/movie-api-go/internal/core/domain"
 )
 
 type GenreRepository interface {
-	Find() ([]domain.Genre, error)
-	FindOne(id int64) (domain.Genre, error)
-	Insert(name string) (domain.Genre, error)
-	Update(id int64, name string) (domain.Genre, error)
-	Delete(id int64) (domain.Genre, error)
+	Migrate()
+	Find(ctx context.Context) ([]*domain.Genre, error)
+	FindOne(ctx context.Context, id int64) (*domain.Genre, error)
+	Insert(ctx context.Context, createGenreDto domain.CreateGenreDto) (*domain.Genre, error)
+	Update(ctx context.Context, id int64, updateGenreDto domain.UpdateGenreDto) (*domain.Genre, error)
+	Delete(ctx context.Context, id int64) (*domain.Genre, error)
 }
