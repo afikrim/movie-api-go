@@ -14,3 +14,12 @@ type GenreRepository interface {
 	Update(ctx context.Context, id int64, updateGenreDto domain.UpdateGenreDto) (*domain.Genre, error)
 	Delete(ctx context.Context, id int64) (*domain.Genre, error)
 }
+
+type MovieRepository interface {
+	Migrate()
+	Find(ctx context.Context) ([]*domain.Movie, error)
+	FindOne(ctx context.Context, id int64) (*domain.Movie, error)
+	Insert(ctx context.Context, createMovieDto domain.CreateMovieDto) (*domain.Movie, error)
+	Update(ctx context.Context, id int64, updateMovieDto domain.UpdateMovieDto) (*domain.Movie, error)
+	Delete(ctx context.Context, id int64) (*domain.Movie, error)
+}

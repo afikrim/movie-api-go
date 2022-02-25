@@ -9,8 +9,10 @@ import (
 	"time"
 
 	genre_service "github.com/afikrim/movie-api-go/internal/core/services/genre"
+	movie_service "github.com/afikrim/movie-api-go/internal/core/services/movie"
 	"github.com/afikrim/movie-api-go/internal/handlers/http"
 	genre_repository "github.com/afikrim/movie-api-go/internal/repositories/genre"
+	movie_repository "github.com/afikrim/movie-api-go/internal/repositories/movie"
 	"github.com/labstack/echo/v4"
 	"gorm.io/driver/mysql"
 	"gorm.io/gorm"
@@ -27,15 +29,26 @@ func main() {
 	e.Logger.SetLevel(log.LstdFlags)
 
 	genreRepository := genre_repository.NewGenreRepository(db)
-	genreService := genre_service.New(genreRepository)
+	genreService := genre_service.NewGenreService(genreRepository)
 	genreHandler := http.NewGenreHttpHandler(genreService)
 	genreRouter := e.Group("/genres")
 
 	genreRouter.POST("", genreHandler.Create)
 	genreRouter.GET("", genreHandler.FindAll)
 	genreRouter.GET("/:id", genreHandler.FindOne)
-	genreRouter.PATCH("/:id", genreHandler.Update)
+	genreRouter.PUT("/:id", genreHandler.Update)
 	genreRouter.DELETE("/:id", genreHandler.Remove)
+
+	movieRepository := movie_repository.NewMovieRepository(db)
+	movieService := movie_service.NewMovieService(movieRepository)
+	movieHandler := http.NewMovieHttpHandler(movieService)
+	movieRouter := e.Group("/movies")
+
+	movieRouter.POST("", movieHandler.Create)
+	movieRouter.GET("", movieHandler.FindAll)
+	movieRouter.GET("/:id", movieHandler.FindOne)
+	movieRouter.PUT("/:id", movieHandler.Update)
+	movieRouter.DELETE("/:id", movieHandler.Remove)
 
 	go func() {
 		if err := e.Start(":8000"); err != nil {

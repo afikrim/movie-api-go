@@ -11,7 +11,7 @@ type service struct {
 	genreRepository ports.GenreRepository
 }
 
-func New(genreRepository ports.GenreRepository) *service {
+func NewGenreService(genreRepository ports.GenreRepository) *service {
 	genreRepository.Migrate()
 
 	return &service{
