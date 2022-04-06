@@ -10,7 +10,7 @@ type Movie struct {
 	ID          int64                    `gorm:"column:id;autoIncrement;primaryKey"`
 	Name        string                   `gorm:"column:name"`
 	Description string                   `gorm:"column:description"`
-	Genres      []genre_repository.Genre `gorm:"many2many:movie_genres"`
+	Genres      []genre_repository.Genre `gorm:"many2many:movie_genres;constraint:OnDelete:CASCADE"`
 	CreatedAt   *time.Time               `gorm:"column:created_at;autoCreateTime"`
 	UpdatedAt   *time.Time               `gorm:"column:updated_at;autoUpdateTime"`
 }

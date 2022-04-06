@@ -47,22 +47,6 @@ func (handler *genreHttpHandler) FindAll(e echo.Context) error {
 	return e.JSON(http.StatusOK, &Response{Message: "Success get all", Data: map[string]interface{}{"genres": genres}})
 }
 
-func (handler *genreHttpHandler) FindOne(e echo.Context) error {
-	ctx := context.Background()
-
-	id, err := strconv.ParseInt(e.Param("id"), 10, 64)
-	if err != nil {
-		return e.JSON(http.StatusBadRequest, &Response{Message: err.Error()})
-	}
-
-	genre, err := handler.genreService.FindOne(ctx, id)
-	if err != nil {
-		return e.JSON(http.StatusInternalServerError, &Response{Message: err.Error()})
-	}
-
-	return e.JSON(http.StatusOK, &Response{Message: "Successfully get one", Data: map[string]interface{}{"genre": genre}})
-}
-
 func (handler *genreHttpHandler) Update(e echo.Context) error {
 	ctx := context.Background()
 
@@ -72,7 +56,7 @@ func (handler *genreHttpHandler) Update(e echo.Context) error {
 	}
 
 	var updateGenreDto domain.UpdateGenreDto
-	if err := e.Bind(updateGenreDto); err != nil {
+	if err := e.Bind(&updateGenreDto); err != nil {
 		return e.JSON(http.StatusBadRequest, &Response{Message: err.Error()})
 	}
 
@@ -81,6 +65,7 @@ func (handler *genreHttpHandler) Update(e echo.Context) error {
 		return e.JSON(http.StatusInternalServerError, &Response{Message: err.Error()})
 	}
 
+	genre.Name = updateGenreDto.Name
 	return e.JSON(http.StatusOK, &Response{Message: "Successfully update one", Data: map[string]interface{}{"genre": genre}})
 }
 

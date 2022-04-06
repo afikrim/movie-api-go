@@ -31,18 +31,17 @@ func main() {
 	genreRepository := genre_repository.NewGenreRepository(db)
 	genreService := genre_service.NewGenreService(genreRepository)
 	genreHandler := http.NewGenreHttpHandler(genreService)
-	genreRouter := e.Group("/genres")
+	genreRouter := e.Group("/api/v1/genres")
 
 	genreRouter.POST("", genreHandler.Create)
 	genreRouter.GET("", genreHandler.FindAll)
-	genreRouter.GET("/:id", genreHandler.FindOne)
 	genreRouter.PUT("/:id", genreHandler.Update)
 	genreRouter.DELETE("/:id", genreHandler.Remove)
 
 	movieRepository := movie_repository.NewMovieRepository(db)
 	movieService := movie_service.NewMovieService(movieRepository)
 	movieHandler := http.NewMovieHttpHandler(movieService)
-	movieRouter := e.Group("/movies")
+	movieRouter := e.Group("/api/v1/movies")
 
 	movieRouter.POST("", movieHandler.Create)
 	movieRouter.GET("", movieHandler.FindAll)

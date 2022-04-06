@@ -72,7 +72,7 @@ func (handler *movieHttpHandler) Update(e echo.Context) error {
 	}
 
 	var updateMovieDto domain.UpdateMovieDto
-	if err := e.Bind(updateMovieDto); err != nil {
+	if err := e.Bind(&updateMovieDto); err != nil {
 		return e.JSON(http.StatusBadRequest, &Response{Message: err.Error()})
 	}
 
